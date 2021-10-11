@@ -16,6 +16,11 @@ resource "aws_iam_role" "sftp" {
         ]
     }
   POLICY
+
+  tags = {
+    Terraform  = "true"
+    owner      = "majid"
+  }
 }
 
 resource "aws_iam_role" "sftp_log" {
@@ -36,6 +41,12 @@ resource "aws_iam_role" "sftp_log" {
         ]
     }
   POLICY
+
+
+  tags = {
+    Terraform  = "true"
+    owner      = "majid"
+  }
 }
 
 resource "aws_iam_role_policy" "sftp" {

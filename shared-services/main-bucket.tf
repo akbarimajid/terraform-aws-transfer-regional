@@ -16,10 +16,15 @@ resource "aws_iam_role" "my-replication-role" {
   ]
 }
 POLICY
+
+  tags = {
+    Terraform  = "true"
+    owner      = "majid"
+  }
 }
 
 resource "aws_s3_bucket" "main-sftp-bucket" {
-  bucket_prefix = "customer-main-sftpbucket"
+  bucket_prefix = var.main_bucket_prefix
   acl           = "private"
 
   versioning {
@@ -35,7 +40,8 @@ resource "aws_s3_bucket" "main-sftp-bucket" {
   }
 
   tags = {
-    Name       = "cutomer-main-sftp-bucket"
+    Terraform  = "true"
+    Name       = var.main_bucket_prefix
     owner      = "majid"
   }
 }
