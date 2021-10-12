@@ -55,23 +55,23 @@ module "eu-west-2" {
   shared_aws_iam_role_sftp_log_arn = module.shared.shared_aws_iam_role_sftp_log_arn
 }
 
-module "secrets" {
+module "user" {
   source = "./modules/users"
-  secrets = { 
-      "SFTP/user1122" : {
+  users = { 
+      "SFTP/user1" : {
           replica_region = "eu-west-2"
-          secrets = {
-            userId = "user1122"
-            Passwrod = "vsdfd@@@sdfsdfFFF@alue2"
+          users = {
+            userId = "user1"
+            Passwrod = ""
             HomeDirectoryDetails = "[{\"Entry\": \"/\", \"Target\": \"/${module.eu-west-2.region-bucket-name}/$${Transfer:UserName}\"}]"
             Role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/eu-west-2-transfer-user-iam-role"
           }
       },
-      "SFTP/user2233" : {
+      "SFTP/user2" : {
           replica_region = "us-east-1"
-          secrets = {
-            userId = "user2233"
-            Passwrod = "GGvsdfd@@@3444DD@alue2"
+          users = {
+            userId = "user2"
+            Passwrod = ""
             HomeDirectoryDetails = "[{\"Entry\": \"/\", \"Target\": \"/${module.us-east-1.region-bucket-name}/$${Transfer:UserName}\"}]"
             Role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/us-east-1-transfer-user-iam-role"
           } 
