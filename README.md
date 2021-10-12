@@ -5,46 +5,39 @@ This is a Terraform module to create a custom identity provider for the AWS Tran
 This module aims to set up an identity provider built on:
 * API Gateway
 * Lambda
-* DynamoDB or AWS Secrets
+* AWS Secrets
+* Route53 latency-based- routing
 
 This module will output the URL for the API Gateway which should be used as the ***url*** argument for the ***aws_transfer_server*** resource
 
 ## Credential Store
 
-A DynamoDB table will be created by the resource and can be used to store SFTP user credentials and user directory details.
-
-Alternatively for security, the credentials can be stored as AWS Secrets.
+The credentials can be stored as AWS Secrets.
 
 The infrastructure code is based on the example provided (in the CF template) in the AWS Storage Blog article
 https://aws.amazon.com/blogs/storage/enable-password-authentication-for-aws-transfer-for-sftp-using-aws-secrets-manager/.
-That example uses AWS Secrets Manager which costs $0.40 per Secret so a DynamoDB based solution may be more palatable as having many users may incur high costs on smaller budgets.
 
+
+Also for minimizing network latency with your AWS Transfer for SFTP servers we used the solution in AWS Storage Blog article
+https://aws.amazon.com/blogs/storage/minimize-network-latency-with-your-aws-transfer-for-sftp-servers/
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| dynamo_table_name | A name for the dynamodb table that will be created | string |  | yes |
-| creds_store | The creds store that will be used for authentication<br>Valid should be: **dynamo** or **secrets** | string | dynamo | yes |
+| creds_store | The creds store that will be used for authentication<br>Valid should be: **secrets** | string | secrets | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | invoke_url | The URL which the SFTP service will use to send authentication requests to |
-| rest_api_id | The ARN of the REST service created. <br>This should be used in the IAM role for SFTP to invoke the service |
-| rest_api_stage_name | The stage name of the REST service created. <br> This should be used in the IAM role for SFTP to invoke the service |
 
 ## Usage
 ```hcl-terraform
-module "sftp-idp" {
-  source                = "../.."
-}
+terraform init
+terraform plan
+terraform apply
 ```
-
-## Examples
-
-* [Public with Dynamo](https://github.com/devopsgoat/terraform-aws-transfer/tree/master/examples/public-dynamo)
-* [Public with AWS Secrets](https://github.com/devopsgoat/terraform-aws-transfer/tree/master/examples/public-secrets)
 
 ## Terraform Versions
 
