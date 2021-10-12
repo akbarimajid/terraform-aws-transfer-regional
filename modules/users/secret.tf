@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "sm" {
-  for_each =  var.secrets
+  for_each =  var.users
   name                    = each.key
   name_prefix             = can(each.value.name_prefix) ? each.value.name_prefix : null
   description             = can(each.value.description) ? each.value.description : null
@@ -13,8 +13,8 @@ resource "aws_secretsmanager_secret" "sm" {
 }
 
 resource "aws_secretsmanager_secret_version" "sm-sv" {
-  for_each      = var.secrets
+  for_each      = var.users
   secret_id     = each.key
-  secret_string = jsonencode(each.value.secrets)
+  secret_string = jsonencode(each.value.users)
   depends_on    = [aws_secretsmanager_secret.sm]
 } 

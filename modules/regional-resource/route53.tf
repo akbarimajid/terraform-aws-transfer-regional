@@ -1,5 +1,5 @@
 data "aws_route53_zone" "selected" {
-  name         = "aws01.projectbox.cloud."
+  name         = "example.com."
   private_zone = false
 }
 
