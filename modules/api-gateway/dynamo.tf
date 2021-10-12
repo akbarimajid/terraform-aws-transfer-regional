@@ -12,6 +12,7 @@ resource "aws_dynamodb_table" "authentication" {
 
   tags = {
     Name = var.dynamo_table_name
+    owner = "majid"
   }
 }
 

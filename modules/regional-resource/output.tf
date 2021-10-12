@@ -5,3 +5,7 @@ output "endpoint" {
 output "role" {
   value = aws_iam_role.foo.arn
 }
+
+output "SFTP-global-domain" {
+  value = aws_route53_record.route53_record.fqdn
+}
