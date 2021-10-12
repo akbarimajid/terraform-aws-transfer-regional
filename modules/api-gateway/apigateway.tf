@@ -16,6 +16,10 @@ resource "aws_iam_role" "iam_for_apigateway_idp" {
       ]
     }
   EOF
+
+  tags = {
+    owner = "majid"
+  }
 }
 
 
@@ -35,6 +39,10 @@ resource "aws_api_gateway_rest_api" "sftp-idp-secrets" {
     types = ["REGIONAL"]
   }
   body = data.template_file.api-definition.rendered
+
+  tags = {
+    owner = "majid"
+  }
 }
 
 resource "aws_lambda_permission" "allow_apigateway" {

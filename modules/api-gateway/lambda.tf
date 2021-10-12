@@ -11,6 +11,10 @@ resource "aws_lambda_function" "sftp-idp" {
       "${local.auth_source_name}" = local.auth_source_value
     }
   }
+
+  tags = {
+    owner = "majid"
+  }
 }
 
 data "archive_file" "sftp-idp" {
@@ -66,6 +70,10 @@ resource "aws_iam_policy" "sftp-idp" {
         ]
     }
   EOF
+
+  tags = {
+    owner = "majid"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "sftp-idp1" {
