@@ -1,6 +1,6 @@
-variable "aws_provider" {
-    default = ""
-}
+#variable "aws_provider" {
+#    default = ""
+#}
 
 variable "rest_api_id" {
     default = ""
@@ -14,10 +14,10 @@ variable "invoke_url" {
     default = ""
 }
 
-variable "creds_store" {
-  description = "If this is not `dynamo` the IdP will use the Secrets Manager for authenication."
-  default     = "secrets"
-}
+#variable "creds_store" {
+#  description = "If this is not `dynamo` the IdP will use the Secrets Manager for authenication."
+#  default     = "secrets"
+#}
 
 variable "s3_main_bucket_arn" {
     default = ""
