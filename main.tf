@@ -60,20 +60,22 @@ module "user" {
   users = { 
       "SFTP/user1" : {
           replica_region = "eu-west-2"
+          alarm_name = "user1"
           users = {
-            userId = "user1"
-            Password = ""
-            HomeDirectoryDetails = "[{\"Entry\": \"/\", \"Target\": \"/${module.eu-west-2.region-bucket-name}/$${Transfer:UserName}\"}]"
-            Role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/eu-west-2-transfer-user-iam-role"
+            "UserId" = "user1"
+            "Password" = ""
+            "HomeDirectoryDetails" = "[{\"Entry\": \"/\", \"Target\": \"/${module.eu-west-2.region-bucket-name}/$${Transfer:UserName}\"}]"
+            "Role" = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/eu-west-2-transfer-user-iam-role"
           }
       },
       "SFTP/user2" : {
           replica_region = "us-east-1"
+          alarm_name = "user2"
           users = {
-            userId = "user2"
-            Password = ""
-            HomeDirectoryDetails = "[{\"Entry\": \"/\", \"Target\": \"/${module.us-east-1.region-bucket-name}/$${Transfer:UserName}\"}]"
-            Role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/us-east-1-transfer-user-iam-role"
+            "UserId" = "user2"
+            "Password" = ""
+            "HomeDirectoryDetails" = "[{\"Entry\": \"/\", \"Target\": \"/${module.us-east-1.region-bucket-name}/$${Transfer:UserName}\"}]"
+            "Role" = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/us-east-1-transfer-user-iam-role"
           } 
       }
   }
