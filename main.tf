@@ -1,3 +1,7 @@
+data "aws_region" "current" {}
+
+data "aws_caller_identity" "current" {}
+
 module "idp" {
   source = "./modules/api-gateway"
   
@@ -35,7 +39,8 @@ module "us-east-1" {
   shared_aws_iam_role_sftp_arn = module.shared.shared_aws_iam_role_sftp_arn
   shared_aws_iam_role_sftp_log_arn = module.shared.shared_aws_iam_role_sftp_log_arn
 }
-module "eu-west-1" {
+
+module "eu-west-2" {
   source = "./modules/regional-resource"
   providers = {
     aws = aws.eu-west-2
@@ -48,4 +53,31 @@ module "eu-west-1" {
   shared_repl_role_name = module.shared.shared_repl_role_name
   shared_aws_iam_role_sftp_arn = module.shared.shared_aws_iam_role_sftp_arn
   shared_aws_iam_role_sftp_log_arn = module.shared.shared_aws_iam_role_sftp_log_arn
+}
+
+module "secrets" {
+  source = "./modules/users"
+  secrets = { 
+      "SFTP/user1122" : {
+          replica_region = "eu-west-2"
+          secrets = {
+            userId = "user1122"
+            Passwrod = "vsdfd@@@sdfsdfFFF@alue2"
+            HomeDirectoryDetails = "[{\"Entry\": \"/\", \"Target\": \"/${module.eu-west-2.region-bucket-name}/$${Transfer:UserName}\"}]"
+            Role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/eu-west-2-transfer-user-iam-role"
+          }
+      },
+      "SFTP/user2233" : {
+          replica_region = "us-east-1"
+          secrets = {
+            userId = "user2233"
+            Passwrod = "GGvsdfd@@@3444DD@alue2"
+            HomeDirectoryDetails = "[{\"Entry\": \"/\", \"Target\": \"/${module.us-east-1.region-bucket-name}/$${Transfer:UserName}\"}]"
+            Role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/us-east-1-transfer-user-iam-role"
+          } 
+      }
+  }
+  tags = {
+    owner = "majid"
+  }
 }
