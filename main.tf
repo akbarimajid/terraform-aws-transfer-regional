@@ -62,7 +62,7 @@ module "user" {
           replica_region = "eu-west-2"
           users = {
             userId = "user1"
-            Passwrod = ""
+            Password = ""
             HomeDirectoryDetails = "[{\"Entry\": \"/\", \"Target\": \"/${module.eu-west-2.region-bucket-name}/$${Transfer:UserName}\"}]"
             Role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/eu-west-2-transfer-user-iam-role"
           }
@@ -71,7 +71,7 @@ module "user" {
           replica_region = "us-east-1"
           users = {
             userId = "user2"
-            Passwrod = ""
+            Password = ""
             HomeDirectoryDetails = "[{\"Entry\": \"/\", \"Target\": \"/${module.us-east-1.region-bucket-name}/$${Transfer:UserName}\"}]"
             Role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/us-east-1-transfer-user-iam-role"
           } 
